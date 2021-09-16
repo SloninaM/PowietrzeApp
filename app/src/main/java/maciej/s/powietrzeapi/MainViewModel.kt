@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import maciej.s.powietrzeapi.model.Station
-import maciej.s.powietrzeapi.model.sensordata.SensorData
+import maciej.s.powietrzeapi.model.sensor.SensorData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -33,8 +33,8 @@ class MainViewModel(private val repo: MainRepository): ViewModel() {
 //            }
 //        }
     }
-    fun getSensorData(stationId: Int){
-        val call = repo.getSensorData(stationId)
+    fun getSensorsOnStation(stationId: Int){
+        val call = repo.getSensorsOnStation(stationId)
         call.enqueue(object:Callback<List<SensorData>>{
             override fun onResponse(call: Call<List<SensorData>>, response: Response<List<SensorData>>) {
                 Log.i("retrofit","response")

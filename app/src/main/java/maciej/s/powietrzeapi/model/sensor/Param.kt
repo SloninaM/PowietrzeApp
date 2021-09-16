@@ -1,4 +1,4 @@
-package maciej.s.powietrzeapi.model.sensordata
+package maciej.s.powietrzeapi.model.sensor
 
 data class Param(
     val paramName: String,

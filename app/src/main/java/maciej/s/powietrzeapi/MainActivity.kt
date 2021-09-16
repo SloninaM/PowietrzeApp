@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         initViewModel()
         //viewModel.getAllStation()
-        viewModel.getSensorData(14)
+        viewModel.getSensorsOnStation(14)
     }
 
     private fun initViewModel() {
