@@ -1,4 +1,4 @@
-package maciej.s.powietrzeapi.model
+package maciej.s.powietrzeapi.model.station
 
 data class Commune(
     val communeName: String,

@@ -3,8 +3,8 @@ package maciej.s.powietrzeapi
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import maciej.s.powietrzeapi.model.Station
-import maciej.s.powietrzeapi.model.sensor.SensorData
+import maciej.s.powietrzeapi.model.station.Station
+import maciej.s.powietrzeapi.model.sensor.Sensor
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -35,13 +35,13 @@ class MainViewModel(private val repo: MainRepository): ViewModel() {
     }
     fun getSensorsOnStation(stationId: Int){
         val call = repo.getSensorsOnStation(stationId)
-        call.enqueue(object:Callback<List<SensorData>>{
-            override fun onResponse(call: Call<List<SensorData>>, response: Response<List<SensorData>>) {
+        call.enqueue(object:Callback<List<Sensor>>{
+            override fun onResponse(call: Call<List<Sensor>>, response: Response<List<Sensor>>) {
                 Log.i("retrofit","response")
                 Log.i("retrofit",response.body().toString())
             }
 
-            override fun onFailure(call: Call<List<SensorData>>, t: Throwable) {
+            override fun onFailure(call: Call<List<Sensor>>, t: Throwable) {
                 Log.i("retrofit","failure")
                 Log.i("retrofit","${t.message}")
             }
