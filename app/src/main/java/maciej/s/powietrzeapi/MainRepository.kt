@@ -6,5 +6,5 @@ class MainRepository(private val api: RetrofitApi) {
 
     fun getAllStation() = api.getAllStations()
 
-    fun getSensorsOnStation(stationId: Int) = api.getSensorsOnStation(stationId)
+    suspend fun getSensorsOnStation(stationId: Int) = api.getSensorsOnStation(stationId)
 }

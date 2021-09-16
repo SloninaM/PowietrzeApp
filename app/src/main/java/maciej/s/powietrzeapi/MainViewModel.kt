@@ -1,8 +1,10 @@
 package maciej.s.powietrzeapi
 
 import android.util.Log
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import maciej.s.powietrzeapi.model.station.Station
 import maciej.s.powietrzeapi.model.sensor.Sensor
 import retrofit2.Call
@@ -12,6 +14,14 @@ import retrofit2.Response
 class MainViewModel(private val repo: MainRepository): ViewModel() {
 
     private lateinit var stationList: List<Station>
+
+    private val _sensorOnStationList = MutableLiveData<List<Sensor>>()
+        val sensorOnStationList: LiveData<List<Sensor>>
+            get() = _sensorOnStationList
+
+    private val _sensorOnStationError = MutableLiveData<String>()
+        val sensorOnStationError: LiveData<String>
+            get() = _sensorOnStationError
 
     fun getAllStation() {
         val call = repo.getAllStation()
@@ -26,26 +36,18 @@ class MainViewModel(private val repo: MainRepository): ViewModel() {
                 Log.i("retrofit","${t.message}")
             }
         })
-//        if(response.isSuccessful){
-//            val body = response.body()
-//            if(body != null){
-//                stationList = body
-//            }
-//        }
     }
     fun getSensorsOnStation(stationId: Int){
-        val call = repo.getSensorsOnStation(stationId)
-        call.enqueue(object:Callback<List<Sensor>>{
-            override fun onResponse(call: Call<List<Sensor>>, response: Response<List<Sensor>>) {
-                Log.i("retrofit","response")
-                Log.i("retrofit",response.body().toString())
+        viewModelScope.launch {
+            val response = repo.getSensorsOnStation(stationId)
+            withContext(Dispatchers.Main){
+                if(response.isSuccessful){
+                    _sensorOnStationList.postValue(response.body())
+                }else{
+                    _sensorOnStationError.postValue(response.message())
+                }
             }
-
-            override fun onFailure(call: Call<List<Sensor>>, t: Throwable) {
-                Log.i("retrofit","failure")
-                Log.i("retrofit","${t.message}")
-            }
-        })
+        }
     }
 
 }

@@ -2,6 +2,7 @@ package maciej.s.powietrzeapi
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import maciej.s.powietrzeapi.retrofit.RetrofitClient
 
@@ -13,8 +14,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initViewModel()
-        //viewModel.getAllStation()
+        setObservers()
         viewModel.getSensorsOnStation(14)
+    }
+
+    private fun setObservers() {
+        viewModel.sensorOnStationList.observe(this,{
+            Log.i("retrofit","response")
+            Log.i("retrofit","$it")
+        })
+
+        viewModel.sensorOnStationError.observe(this,{
+            Log.i("retrofit",it)
+        })
     }
 
     private fun initViewModel() {
