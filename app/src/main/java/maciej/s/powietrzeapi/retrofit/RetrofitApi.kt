@@ -1,5 +1,6 @@
 package maciej.s.powietrzeapi.retrofit
 
+import maciej.s.powietrzeapi.model.airquality.StationAirQuality
 import maciej.s.powietrzeapi.model.station.Station
 import maciej.s.powietrzeapi.model.sensor.Sensor
 import maciej.s.powietrzeapi.model.sensordata.SensorData
@@ -22,4 +23,6 @@ interface RetrofitApi {
     @GET("data/getData/{sensorId}")
     fun getSensorMeasurementData(@Path("sensorId") sensorId: Int): Call<List<SensorData>>
 
+    @GET("aqindex/getIndex/{stationId}")
+    fun getAirQualityIndex(@Path("stationId") stationId: Int): Call<List<StationAirQuality>>
 }
