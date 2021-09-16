@@ -3,6 +3,7 @@ package maciej.s.powietrzeapi
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
+import maciej.s.powietrzeapi.retrofit.RetrofitClient
 
 class MainActivity : AppCompatActivity() {
 
@@ -12,10 +13,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initViewModel()
+        //viewModel.getAllStation()
+        viewModel.getSensorData(14)
     }
 
     private fun initViewModel() {
-        val repo = MainRepository()
+        val retrofitClient = RetrofitClient.getInstance()
+        val api = retrofitClient.api
+        val repo = MainRepository(api)
+
         val viewModelFactory = MainViewModelFactory(repo)
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
     }
