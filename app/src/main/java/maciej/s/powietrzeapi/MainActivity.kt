@@ -4,8 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import maciej.s.powietrzeapi.model.sensor.Sensor
 import maciej.s.powietrzeapi.retrofit.RetrofitClient
 
 class MainActivity : AppCompatActivity() {
@@ -36,7 +36,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun setObservers() {
         viewModel.sensorOnStationList.observe(this,{
-            displayRetrofitLog(it.toString())
+            onIntentCallback(it)
+            //displayRetrofitLog(it.toString())
         })
 
         viewModel.sensorMeasurementDataList.observe(this,{
@@ -54,6 +55,17 @@ class MainActivity : AppCompatActivity() {
         viewModel.error.observe(this,{
             displayRetrofitLog(it)
         })
+    }
+
+    private fun onIntentCallback(list: List<Sensor>) {
+        val arrayList = list as ArrayList
+        val bundle = Bundle()
+        bundle.putParcelableArrayList(GET_SENSOR_ON_STATION, arrayList)
+        val intent = Intent().apply{
+            action = "maciej.s.appclient.LAUNCH_IT"
+            putExtra(GET_SENSOR_ON_STATION,bundle)
+        }
+        startActivity(intent)
     }
 
     private fun displayRetrofitLog(string: String) {
