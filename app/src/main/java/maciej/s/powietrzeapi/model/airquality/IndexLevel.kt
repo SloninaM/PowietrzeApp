@@ -1,6 +1,6 @@
 package maciej.s.powietrzeapi.model.airquality
 
 data class IndexLevel(
-    val stIndexLevel: Int,
+    val id: Int,
     val indexLevelName: String
 )

@@ -16,14 +16,14 @@ interface RetrofitApi {
     }
 
     @GET("station/findAll")
-    fun getAllStations(): Call<List<Station>>
+    suspend fun getAllStations(): Response<List<Station>>
 
     @GET("station/sensors/{stationId}")
     suspend fun getSensorsOnStation(@Path("stationId") stationId: Int): Response<List<Sensor>>
 
     @GET("data/getData/{sensorId}")
-    fun getSensorMeasurementData(@Path("sensorId") sensorId: Int): Call<List<SensorData>>
+    suspend fun getSensorMeasurementData(@Path("sensorId") sensorId: Int): Response<SensorData>
 
     @GET("aqindex/getIndex/{stationId}")
-    fun getAirQualityIndex(@Path("stationId") stationId: Int): Call<List<StationAirQuality>>
+    suspend fun getAirQualityIndex(@Path("stationId") stationId: Int): Response<StationAirQuality>
 }
