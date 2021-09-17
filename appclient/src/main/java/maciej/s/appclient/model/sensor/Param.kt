@@ -9,4 +9,4 @@ data class Param(
     val paramFormula: String,
     val paramCode: String,
     val idParam: String
-):Parcelable
+): Parcelable
